@@ -1,0 +1,14 @@
+{
+  "type": "module",
+  "scripts": {},
+  "dependencies": {
+    "@polkadot/api": "^10.8.1",
+    "@unique-nft/accounts": "^0.3.6",
+    "@unique-nft/sdk": "^0.2.17",
+    "@unique-nft/substrate-client": "^0.8.6",
+    "@unique-nft/unique-mainnet-types": "^939.54.0",
+    "@unique-nft/utils": "^0.3.13",
+    "dotenv": "^16.1.4",
+    "prettier": "^2.8.8"
+  }
+}
