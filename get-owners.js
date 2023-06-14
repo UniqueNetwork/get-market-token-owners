@@ -41,19 +41,20 @@ async function main() {
 
 async function readEvents(parentBlockHash) {
   const events = (await api.query.system.events.at(parentBlockHash)).toJSON();
-  const event = events.find(
+  const transferEvents = events.filter(
     (e) => e.event.section === "common" && e.event.method === "Transfer"
   );
-  if (!event) return;
+  if (!transferEvents.length) return;
 
-  const collectionId = event.event.data[0];
-  const tokenId = event.event.data[1];
-  const owner = event.event.data[2];
-  if (collectionId !== 1 && collectionId !== 2) return;
+  transferEvents.map((event) => {
+    const [collectionId, tokenId, from, to] = event.event.data;
 
-  if (event.event.data[3].ethereum?.toLowerCase() === contractAddress) {
-    saveOwner(collectionId, tokenId, owner);
-  }
+    if (collectionId !== 1 && collectionId !== 2) return;
+
+    if (to.ethereum?.toLowerCase() === contractAddress) {
+      saveOwner(collectionId, tokenId, from);
+    }
+  });
 }
 
 function saveOwner(collectionId, tokenId, owner) {
